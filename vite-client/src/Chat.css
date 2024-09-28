@@ -1,0 +1,15 @@
+/* Chat.css */
+
+/* .card {
+  &.user-message {
+    background-color: #e0f7fa;
+  }
+
+  &.assistant-message {
+    background-color: #f1f8e9;
+  }
+} */
+
+.chat-card {
+  max-width: 75%;
+}

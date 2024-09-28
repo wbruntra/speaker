@@ -1,0 +1,30 @@
+.custom-audio-player {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.custom-audio-player .rhap_container {
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+.custom-audio-player .rhap_main-controls-button {
+  width: 30px;
+  height: 30px;
+}
+
+.custom-audio-player .rhap_play-pause-button {
+  font-size: 20px;
+  width: 30px;
+  height: 30px;
+}
+
+.custom-audio-player .rhap_progress-section {
+  flex: 1;
+  margin-left: 10px;
+}
+
+.custom-audio-player .rhap_time {
+  font-size: 12px;
+}

@@ -1,0 +1,26 @@
+@import "bootstrap/scss/bootstrap";
+
+// Set the background color of the entire app
+body {
+  // background-color: #363636; // Light gray color
+  // color: white;
+  min-height: 100vh; // Ensure it covers the full viewport height
+  margin: 0; // Remove default margin
+  font-family: 'Open Sans', sans-serif;
+}
+
+
+/* AudioCard.css */
+
+.content-hidden {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+}
+
+.content-visible {
+  max-height: 1000px; /* Adjust as needed */
+  opacity: 1;
+  transition: max-height 0.5s ease-in, opacity 0.5s ease-in;
+}
