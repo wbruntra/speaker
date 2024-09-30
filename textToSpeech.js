@@ -139,11 +139,11 @@ const transcribeAudioFile = async (fileBuffer, fileName, mimeType = 'audio/wav')
  * @param {Array} messageHistory - An array of message objects with 'role' and 'content'.
  * @returns {Promise<string>} - The response from ChatGPT.
  */
-const getChatGPTResponse = async (messageHistory) => {
+const getChatGPTResponse = async ({ messageHistory, model }) => {
   try {
     const completion = await openai.chat.completions.create({
       messages: messageHistory,
-      model: 'gpt-4o-mini',
+      model: model || 'gpt-4o-mini',
     })
 
     const chatResponse = completion.choices[0].message.content
@@ -191,8 +191,8 @@ const getTextTranslation = async (text, targetLanguage = 'Spanish') => {
  *   @property {string} file_url - The URL of the generated audio file.
  *   @property {string} content - The text content that was converted to speech.
  */
-const getSpokenResponse = async (messageHistory) => {
-  const textResponse = await getChatGPTResponse(messageHistory)
+const getSpokenResponse = async ({ messageHistory, model }) => {
+  const textResponse = await getChatGPTResponse({ messageHistory, model })
 
   const audioResponse = await performTextToSpeech({
     content: textResponse,
@@ -209,35 +209,7 @@ const run = async () => {
     content,
     text_hash: getTextHash(content),
   })
-
   console.log('Speech:', speech)
-
-  // const gpt = await getChatGPTResponse()
-  // console.log(gpt)
-
-  //   const textToTranscribe = `**Sermon: The Ache of Unfairness and the Boundless Love of God**
-  // Have you ever felt that sharp sting of unfairness?`
-  //   const { cost, characters } = getTranscriptionCost(textToTranscribe)
-  //   console.log(
-  //     `The text has ${(characters / 1000).toFixed(
-  //       1,  console.log(gpt)
-
-  //     )}k characters, the cost to perform TTS is $${cost.toFixed(
-  //       3,
-  //     )}. Do you want to proceed? (yes/no)`,
-  //   )
-  //   const rl = readline.createInterface({
-  //     input: process.stdin,
-  //     output: process.stdout,
-  //   })
-  //   rl.question('', (answer) => {
-  //     if (answer.toLowerCase() === 'yes') {
-  //       return performTextToSpeech()
-  //     } else {
-  //       console.log('Operation cancelled.')
-  //       rl.close()
-  //     }
-  //   })
 }
 
 if (require.main === module) {

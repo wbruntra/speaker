@@ -1,5 +1,6 @@
 const db = require('../db_connection')
 const bcrypt = require('bcrypt')
+const secrets = require('../secrets')
 
 /**
  * Verifies if the given password matches the hashed password.
@@ -20,7 +21,7 @@ const verifyPassword = async (password, hash) => {
 const run = async () => {
   const entry = {
     username: 'bill',
-    password: 'test123',
+    password: secrets.USER_PASSWORD,
   }
 
   // Hash the password before saving it to the database
@@ -30,7 +31,7 @@ const run = async () => {
   // Update the entry with the hashed password
   entry.password = hashedPassword
 
-  await db('users').insert(entry)
+  await db('users').insert(entry).onConflict('username').merge('password')
 }
 
 // Example usage
