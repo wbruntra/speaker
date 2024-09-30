@@ -25,12 +25,21 @@ export default function AudioRecorderCard({
 
   const startRecording = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+
+    let mimeType = 'audio/webm'
+    if (!MediaRecorder.isTypeSupported(mimeType)) {
+      mimeType = 'audio/ogg'
+    }
+    if (!MediaRecorder.isTypeSupported(mimeType)) {
+      mimeType = 'audio/wav'
+    }
+
     mediaRecorderRef.current = new MediaRecorder(stream)
     mediaRecorderRef.current.ondataavailable = (event) => {
       audioChunksRef.current.push(event.data)
     }
     mediaRecorderRef.current.onstop = async () => {
-      const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' })
+      const audioBlob = new Blob(audioChunksRef.current, { type: mimeType })
       const url = URL.createObjectURL(audioBlob)
       setAudioUrl(url)
       audioChunksRef.current = []
@@ -115,7 +124,7 @@ export default function AudioRecorderCard({
               <div className="d-flex align-items-center">
                 <audio controls src={audioUrl} className="me-3"></audio>
                 <div>
-                  {autoTranscribe ? (
+                  {!autoTranscribe ? (
                     <button
                       className="btn btn-success me-2"
                       onClick={() => sendAudioToServer('transcribe')}
