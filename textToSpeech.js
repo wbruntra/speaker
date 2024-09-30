@@ -115,9 +115,9 @@ async function performTextToSpeech(job) {
   }
 }
 
-const transcribeAudioFile = async (fileBuffer, fileName) => {
+const transcribeAudioFile = async (fileBuffer, fileName, mimeType = 'audio/wav') => {
   try {
-    const file = new File([fileBuffer], fileName, { type: 'audio/wav' })
+    const file = new File([fileBuffer], fileName, { type: mimeType })
 
     const transcription = await openai.audio.transcriptions.create({
       file: file,

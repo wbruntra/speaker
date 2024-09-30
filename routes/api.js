@@ -135,7 +135,7 @@ router.post('/upload-audio', upload.single('file'), async (req, res, next) => {
     })
 
     // Transcribe the audio file
-    let transcription = await transcribeAudioFile(fileBuffer, fileName)
+    let transcription = await transcribeAudioFile(fileBuffer, fileName, req.file.mimetype)
 
     if (action === 'translate') {
       transcription = await getTextTranslation(transcription)
