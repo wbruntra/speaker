@@ -149,7 +149,7 @@ router.post('/upload-audio', upload.single('file'), async (req, res, next) => {
 })
 
 router.post('/chat', async (req, res) => {
-  const { messageHistory, session_id, no_spoken_response } = req.body
+  const { messageHistory, session_id, no_spoken_response, model } = req.body
 
   const user_id = req.session.user_id
 
@@ -162,17 +162,14 @@ router.post('/chat', async (req, res) => {
   let newMessageHistory
 
   if (!no_spoken_response) {
-    response = await getSpokenResponse(chatGPTMessages)
+    response = await getSpokenResponse({ messageHistory: chatGPTMessages, model })
     newMessageHistory = [
       ...messageHistory,
       { role: 'assistant', content: response.content, audio_url: response.file_url },
     ]
   } else {
-    response = await getChatGPTResponse(chatGPTMessages)
-    newMessageHistory = [
-      ...messageHistory,
-      { role: 'assistant', content: response },
-    ]
+    response = await getChatGPTResponse({ messageHistory: chatGPTMessages, model })
+    newMessageHistory = [...messageHistory, { role: 'assistant', content: response }]
   }
 
   // find the session if it exists, otherwise create a new one

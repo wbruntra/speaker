@@ -8,7 +8,7 @@ app.use(
   session({
     secret: 'sandsgrowledcamelieknock',
     name: 'ai-chat-session',
-    saveUninitialized: false,
+    saveUninitialized: true,
     resave: false,
     maxAge: 90 * 24 * 60 * 60 * 1000, // 90 days
   }),

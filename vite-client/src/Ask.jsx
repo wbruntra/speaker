@@ -105,6 +105,7 @@ export default function Ask() {
             content: transcription,
           },
         ],
+        model: 'gpt-4o-2024-08-06',
         // session_id: sessionId,
       })
 
