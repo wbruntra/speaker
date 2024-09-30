@@ -93,6 +93,7 @@ async function performTextToSpeech(job) {
       model: 'tts-1',
       voice: job.voice || 'nova',
       input: job.content,
+      response_format: 'mp3',
     })
 
     const buffer = Buffer.from(await mp3.arrayBuffer())
